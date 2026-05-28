@@ -33,6 +33,7 @@ import {
 } from "./utils.js";
 import "./styles.css";
 import "./debug.css";
+import "./premium.css";
 
 function policyIcon(type) {
   return { workers: HardHat, liability: ShieldCheck, auto: Truck, license: FileText }[type] || Shield;
