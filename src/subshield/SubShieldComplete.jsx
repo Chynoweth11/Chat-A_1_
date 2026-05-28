@@ -32,6 +32,7 @@ import {
   writeStoredData,
 } from "./utils.js";
 import "./styles.css";
+import "./debug.css";
 
 function policyIcon(type) {
   return { workers: HardHat, liability: ShieldCheck, auto: Truck, license: FileText }[type] || Shield;
@@ -211,7 +212,7 @@ function PolicyDetail({ policy, onRenew, onShop, onSend }) {
   const Icon = policyIcon(policy.type);
   const status = getStatus(policy.daysRemaining);
   const width = `${Math.max(5, Math.min(100, policy.daysRemaining / 1.2))}%`;
-  return <div><div className="ss-detail-head"><span className="ss-icon-tile"><Icon size={22} /></span><div><span className="ss-eyebrow">Policy detail</span><h2>{policy.name}</h2><p className="ss-muted">{policy.carrier} · {policy.policyNumber}</p></div></div><div className="ss-bar-top"><span>{policy.daysRemaining} days left</span><span>{formatMoney(policy.premium)}/yr</span></div><div className="ss-bar"><span style={{ width }} /></div><div className="ss-info-grid"><Info label="Limit" value={policy.limit} /><Info label="Expiration" value={policy.expires} /><Info label="Documents" value={`${policy.documents.length} verified`} /><Info label="Carrier" value={policy.carrier} /></div><div className={`ss-note ${status.className === "danger" ? "danger" : ""}`}><AlertTriangle size={16} /> {policy.statusNote}</div><Section title="Verified documents" sub={`${policy.documents.length} files`} />{policy.documents.map((document) => <DocumentRow key={document} name={document} />)}<div className="ss-row">{policy.daysRemaining <= 10 ? <button className="ss-button" onClick={onRenew}><Zap size={16} /> Renew now</button> : <button className="ss-button soft" onClick={onShop}>Lower bill</button>}<button className="ss-button soft" onClick={onSend}><Send size={16} /> Send</button></div></div>;
+  return <div><div className="ss-detail-head"><span className="ss-icon-tile"><Icon size={22} /></span><div><span className="ss-eyebrow">Policy detail</span><h2>{policy.name}</h2><p className="ss-muted">{policy.carrier} · {policy.policyNumber}</p></div></div><div className="ss-bar-top"><span>{policy.daysRemaining} days left</span><span>{formatMoney(policy.premium)}/yr</span></div><div className="ss-bar"><span className={status.className} style={{ width }} /></div><div className="ss-info-grid"><Info label="Limit" value={policy.limit} /><Info label="Expiration" value={policy.expires} /><Info label="Documents" value={`${policy.documents.length} verified`} /><Info label="Carrier" value={policy.carrier} /></div><div className={`ss-note ${status.className === "danger" ? "danger" : ""}`}><AlertTriangle size={16} /> {policy.statusNote}</div><Section title="Verified documents" sub={`${policy.documents.length} files`} />{policy.documents.map((document) => <DocumentRow key={document} name={document} />)}<div className="ss-row">{policy.daysRemaining <= 10 ? <button className="ss-button" onClick={onRenew}><Zap size={16} /> Renew now</button> : <button className="ss-button soft" onClick={onShop}>Lower bill</button>}<button className="ss-button soft" onClick={onSend}><Send size={16} /> Send</button></div></div>;
 }
 
 function ContractorsView({ contractors, onSend }) {
